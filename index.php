@@ -1,16 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>title</title>
-    <link rel="stylesheet" href="stylesheet.css" type="text/css">
-</head>
-<body>
+<?php require_once 'includes/header.php'; ?>
+<?php use Carbon\Carbon; ?>
 
-<h1>HELLO WORLD</h1>
+    <section>
+        <div class="container">
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js" type="text/javascript"></script>
-</body>
-</html>
+            <?php echo Carbon::make(date('Y-m-d 09:25:00'))->diffForHumans(); ?>
+
+        </div>
+    </section>
+
+<?php require_once 'includes/footer.php'; ?>
