@@ -1,4 +1,8 @@
 .idea
 node_modules
 vendor
+<<<<<<< Updated upstream
 env.php
+=======
+env.php
+>>>>>>> Stashed changes
