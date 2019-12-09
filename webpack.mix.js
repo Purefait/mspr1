@@ -11,7 +11,13 @@ const mix = require('laravel-mix');
  |
  */
 
+<<<<<<< Updated upstream
 mix
     .js('resources/js/app.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css')
     .extract();
+=======
+mix.js('resources/js/app.js', 'public/js')
+    .sass('resources/sass/app.scss', 'public/css')
+.extract();
+>>>>>>> Stashed changes
