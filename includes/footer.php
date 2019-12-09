@@ -1,6 +1,8 @@
 </main>
-<footer id="footer">
-    //FOOTER
+<footer>
+<small class="copyrights"> © Copyrights reserved  2014</small>
+
+
 </footer>
 </div>
 <script src="public/js/manifest.js"></script>

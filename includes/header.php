@@ -12,6 +12,38 @@
 <body>
 <div id="app">
     <header id="header">
-        //NAVBAR
-    </header>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="logo">Responsive</div>
+                    </div>
+                    <div class="col-sm-6 hidden-xs">
+                        <div class="row">
+                            <div class="col-sm-5">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Email Address">
+                                    <div class="login-bottom-text checkbox hidden-sm">
+                                        <label>
+                                            <input type="checkbox" id="">
+                                            Keep me sign in
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-5">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Password">
+                                    <div class="login-bottom-text hidden-sm"> Forgot your password?  </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <input type="button" value="login" class="btn btn-default btn-header-login">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
     <main id="main">
