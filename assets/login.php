@@ -24,7 +24,7 @@ if(isset($_POST['login_button'])) {
         exit();
     }
     else {
-        array_push($error_array, "L'Email ou le mot de passe est incorrect");
+        echo "Vous vous êtes trompé dans le mail ou le mot de passe";
     }
 
 
