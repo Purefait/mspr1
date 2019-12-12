@@ -23,13 +23,17 @@ if(isset($_POST['post'])){
         echo "Likes: " . $user['num_likes'];
 
         ?>
-    </div>
 
+    </div>
+    <div class="custom-file">
+        <input type="file" class="custom-file-input" id="customFile">
+        <label class="custom-file-label" for="customFile"></label>
+    </div>
 </div>
 
 <div class="main_column column">
     <form class="post_form" action="index.php" method="POST">
-        <textarea name="post_text" id="post_text" placeholder="Got something to say?"></textarea>
+        <textarea name="post_text" id="post_text" placeholder="Des choses à dires ??"></textarea>
         <input type="submit" name="post" id="post_button" value="Postez">
         <hr>
 
@@ -65,6 +69,7 @@ if(isset($_POST['post'])){
         }
 
         ?>
+
     </div>
 
 
