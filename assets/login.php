@@ -20,11 +20,11 @@ if(isset($_POST['login_button'])) {
         }
 
         $_SESSION['username'] = $username;
-        header("Location: index.php");
+        header("Location: newsfeed.php");
         exit();
     }
     else {
-        echo "Vous vous êtes trompé dans le mail ou le mot de passe";
+        array_push($error_array, "L'Email ou le mot de passe est incorrect");
     }
 
 

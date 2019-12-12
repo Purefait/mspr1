@@ -1,64 +1,136 @@
-<?php require_once 'includes/header.php'; ?>
-<?php require_once 'config/config.php'; ?>
-<?php use Carbon\Carbon; ?>
+<?php
+include("includes/header.php");
 
-    <section>
-        <div class="container">
 
-            <?php echo Carbon::make(date('Y-m-d 09:25:00'))->diffForHumans(); ?>
+if(isset($_POST['post'])){
+    $post = new Post($con, $userLoggedIn);
+    $post->submitPost($_POST['post_text'], 'none');
+}
 
-            <main class="login-form">
-                <div class="cotainer">
-                    <div class="row justify-content-center">
-                        <div class="col-md-8">
-                            <div class="card">
-                                <div class="card-header">Register</div>
-                                <div class="card-body">
-                                    <form action="" method="">
-                                        <div class="form-group row">
-                                            <label for="email_address" class="col-md-4 col-form-label text-md-right">E-Mail Address</label>
-                                            <div class="col-md-6">
-                                                <input type="text" id="email_address" class="form-control" name="email-address" required autofocus>
-                                            </div>
-                                        </div>
 
-                                        <div class="form-group row">
-                                            <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
-                                            <div class="col-md-6">
-                                                <input type="password" id="password" class="form-control" name="password" required>
-                                            </div>
-                                        </div>
+?>
+<div class="user_details column">
+    <a href="<?php echo $userLoggedIn; ?>">  <img src="<?php echo $user['profile_pic']; ?>"> </a>
 
-                                        <div class="form-group row">
-                                            <div class="col-md-6 offset-md-4">
-                                                <div class="checkbox">
-                                                    <label>
-                                                        <input type="checkbox" name="remember"> Remember Me
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
+    <div class="user_details_left_right">
+        <a href="<?php echo $userLoggedIn; ?>">
+            <?php
+            echo $user['first_name'] . " " . $user['last_name'];
 
-                                        <div class="col-md-6 offset-md-4">
-                                            <button type="submit"  class="btn btn-primary">
-                                                Register
-                                            </button>
-                                            <a  type="submit" href="register.php" class="btn btn-light">
-                                                S'inscrire
-                                            </a>
-                                            <a href="#" class="btn btn-link">
-                                                Forgot Your Password?
-                                            </a>
-                                        </div>
-                                </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-        </div>
+            ?>
+        </a>
+        <?php echo "Posts: " . $user['num_posts']. "<br>";
+        echo "Likes: " . $user['num_likes'];
 
-        </div>
-    </section>
+        ?>
+    </div>
 
-<?php require_once 'includes/footer.php'; ?>
+</div>
+
+<div class="main_column column">
+    <form class="post_form" action="index.php" method="POST">
+        <textarea name="post_text" id="post_text" placeholder="Got something to say?"></textarea>
+        <input type="submit" name="post" id="post_button" value="Postez">
+        <hr>
+
+    </form>
+
+    <div class="posts_area"></div>
+    <img id="loading" src="assets/images/icons/loading.gif">
+
+
+</div>
+
+<div class="user_details column">
+
+    <h4>En ce moment :</h4>
+
+    <div class="trends">
+        <?php
+        $query = mysqli_query($con, "SELECT * FROM trends ORDER BY hits DESC LIMIT 9");
+
+        foreach ($query as $row) {
+
+            $word = $row['title'];
+            $word_dot = strlen($word) >= 14 ? "..." : "";
+
+            $trimmed_word = str_split($word, 14);
+            $trimmed_word = $trimmed_word[0];
+
+            echo "<div style'padding: 1px'>";
+            echo $trimmed_word . $word_dot;
+            echo "</div>";
+
+
+        }
+
+        ?>
+    </div>
+
+
+</div>
+
+
+
+
+<script>
+    var userLoggedIn = '<?php echo $userLoggedIn; ?>';
+
+    $(document).ready(function() {
+
+        $('#loading').show();
+
+        //Requête Ajaxx pour récupérer les post
+        $.ajax({
+            url: "includes/handlers/ajax_load_posts.php",
+            type: "POST",
+            data: "page=1&userLoggedIn=" + userLoggedIn,
+            cache:false,
+
+            success: function(data) {
+                $('#loading').hide();
+                $('.posts_area').html(data);
+            }
+        });
+
+        $(window).scroll(function() {
+            var height = $('.posts_area').height(); //Div contenant les posts
+            var scroll_top = $(this).scrollTop();
+            var page = $('.posts_area').find('.nextPage').val();
+            var noMorePosts = $('.posts_area').find('.noMorePosts').val();
+
+            if ((document.body.scrollHeight == document.body.scrollTop + window.innerHeight) && noMorePosts == 'false') {
+                $('#loading').show();
+
+                var ajaxReq = $.ajax({
+                    url: "includes/handlers/ajax_load_posts.php",
+                    type: "POST",
+                    data: "page=" + page + "&userLoggedIn=" + userLoggedIn,
+                    cache:false,
+
+                    success: function(response) {
+                        $('.posts_area').find('.nextPage').remove(); //Supprime la page suivant
+                        $('.posts_area').find('.noMorePosts').remove();
+
+                        $('#loading').hide();
+                        $('.posts_area').append(response);
+                    }
+                });
+
+            }
+
+            return false;
+
+        });
+
+
+    });
+
+</script>
+
+
+
+
+</div>
+</body>
+</html>
